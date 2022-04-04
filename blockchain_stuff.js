@@ -101,7 +101,8 @@ async function connectWallet() {
 loadDapp()
 
 const onContractInitCallback = async () => {
-  console.log(await my_contract.methods.new_contract_address().call())
+  latest_contract = await my_contract.methods.new_contract_address().call()
+  document.getElementById("latest_contract").textContent = latest_contract
 }
 
 const onWalletConnected = async () => {
