@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+  <input id="connect_button" type="button" value="Connect" onclick="connectWallet()" style="display: none"></input>
+  <p id="account_address" style="display: none"></p>
+  <p id="web3_message"></p>
+  <p id="contract_state"></p>
+  <p id="account_state"></p>
+  <div id="claim_buttons"></div>
+  <p>Name:</p>
+  <input type="input"  value="" id="_name"></input>
+  <p>Symbol:</p>
+  <input type="input"  value="" id="_symbol"></input>
+  <p>Marketing address:</p>
+  <input type="input"  value="" id="_marketing_wallet"></input>
+  <p>Donation address:</p>
+  <input type="input"  value="" id="_donation_wallet"></input>
+  <p>Liquidity address:</p>
+  <input type="input"  value="" id="_liquidity_wallet"></input>
+  <p>Supply:</p>
+  <input type="input"  value="" id="_total_supply"></input>
+  <p>Max wallet percentage:</p>
+  <input type="input"  value="" id="_max_wallet_percentage"></input>
+  <p>Max tx percentage:</p>
+  <input type="input"  value="" id="_max_tx_percentage"></input>
+  <p>Marketing fee:</p>
+  <input type="input"  value="" id="_marketing_fee"></input>
+  <p>Donation fee:</p>
+  <input type="input"  value="" id="_donation_fee"></input>
+  <p>Liquidity fee:</p>
+  <input type="input"  value="" id="_liquidity_fee"></input>
+  <br>
+  <input type="button" value="Create" onclick="_createToken()"></input>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.5/web3.min.js"></script>
+  <script type="text/javascript" src="blockchain_stuff.js"></script>
+</body>
+</html>
+
+<script>
+  function _createToken()
+  {
+    _name = document.getElementById("_name").value
+    _symbol = document.getElementById("_symbol").value
+    _marketing_wallet = document.getElementById("_marketing_wallet").value
+    _donation_wallet = document.getElementById("_donation_wallet").value
+    _liquidity_wallet = document.getElementById("_liquidity_wallet").value
+    _total_supply = document.getElementById("_total_supply").value
+    _max_wallet_percentage = document.getElementById("_max_wallet_percentage").value
+    _max_tx_percentage = document.getElementById("_max_tx_percentage").value
+    _marketing_fee = document.getElementById("_marketing_fee").value
+    _donation_fee = document.getElementById("_donation_fee").value
+    _liquidity_fee = document.getElementById("_liquidity_fee").value
+    
+    data = web3.eth.abi.encodeFunctionCall({
+    name: 'createToken',
+    type: 'function',
+    inputs: [{
+				"internalType": "string",
+				"name": "p_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "p_symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "p_marketing_wallet",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "p_donation_wallet",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "p_liquidity_wallet",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "p_total_supply",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "p_max_wallet_percentage",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "p_max_tx_percentage",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "marketing_fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "donation_fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "liquidity_fee",
+				"type": "uint256"
+    }]
+    }, ["aa", "bb", "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB",
+        "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB", "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB",
+        web3.utils.toWei("1000000"), 100,
+        100, 300,
+        300, 200]);
+    console.log(data)
+    launchToken('0x00A5543d7c4b15B5f4dff341676BdC5CD8076a19',data)
+  }
+</script>
