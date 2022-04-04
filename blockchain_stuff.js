@@ -102,7 +102,7 @@ loadDapp()
 
 const onContractInitCallback = async () => {
   latest_contract = await my_contract.methods.new_contract_address().call()
-  document.getElementById("latest_contract").textContent = latest_contract
+  document.getElementById("latest_contract").textContent = "Latest deploy: " + latest_contract
 }
 
 const onWalletConnected = async () => {
