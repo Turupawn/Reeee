@@ -11,28 +11,30 @@
   <p id="account_state"></p>
   <p id="latest_contract"></p>
   <div id="claim_buttons"></div>
+  <p>Owner:</p>
+  <input type="input"  value="0x08966BfFa14A7d0d7751355C84273Bb2eaF20FC3" id="_owner"></input>
   <p>Name:</p>
-  <input type="input"  value="" id="_name"></input>
+  <input type="input"  value="Name" id="_name"></input>
   <p>Symbol:</p>
-  <input type="input"  value="" id="_symbol"></input>
+  <input type="input"  value="SYM" id="_symbol"></input>
   <p>Marketing address:</p>
-  <input type="input"  value="" id="_marketing_wallet"></input>
+  <input type="input"  value="0x08966BfFa14A7d0d7751355C84273Bb2eaF20FC3" id="_marketing_wallet"></input>
   <p>Donation address:</p>
-  <input type="input"  value="" id="_donation_wallet"></input>
+  <input type="input"  value="0x08966BfFa14A7d0d7751355C84273Bb2eaF20FC3" id="_donation_wallet"></input>
   <p>Liquidity address:</p>
-  <input type="input"  value="" id="_liquidity_wallet"></input>
+  <input type="input"  value="0x08966BfFa14A7d0d7751355C84273Bb2eaF20FC3" id="_liquidity_wallet"></input>
   <p>Supply:</p>
-  <input type="input"  value="" id="_total_supply"></input>
+  <input type="input"  value="1000000" id="_total_supply"></input>
   <p>Max wallet percentage:</p>
-  <input type="input"  value="" id="_max_wallet_percentage"></input>
+  <input type="input"  value="100" id="_max_wallet_percentage"></input>
   <p>Max tx percentage:</p>
-  <input type="input"  value="" id="_max_tx_percentage"></input>
+  <input type="input"  value="100" id="_max_tx_percentage"></input>
   <p>Marketing fee:</p>
-  <input type="input"  value="" id="_marketing_fee"></input>
+  <input type="input"  value="300" id="_marketing_fee"></input>
   <p>Donation fee:</p>
-  <input type="input"  value="" id="_donation_fee"></input>
+  <input type="input"  value="300" id="_donation_fee"></input>
   <p>Liquidity fee:</p>
-  <input type="input"  value="" id="_liquidity_fee"></input>
+  <input type="input"  value="100" id="_liquidity_fee"></input>
   <br>
   <input type="button" value="Create" onclick="_createToken()"></input>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.3.5/web3.min.js"></script>
@@ -43,6 +45,7 @@
 <script>
   function _createToken()
   {
+    _owner = document.getElementById("_owner").value
     _name = document.getElementById("_name").value
     _symbol = document.getElementById("_symbol").value
     _marketing_wallet = document.getElementById("_marketing_wallet").value
@@ -54,19 +57,32 @@
     _marketing_fee = document.getElementById("_marketing_fee").value
     _donation_fee = document.getElementById("_donation_fee").value
     _liquidity_fee = document.getElementById("_liquidity_fee").value
-    
+
     data = web3.eth.abi.encodeFunctionCall({
     name: 'createToken',
     type: 'function',
-    inputs: [{
-				"internalType": "string",
-				"name": "p_name",
-				"type": "string"
+    inputs: [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
 			},
 			{
-				"internalType": "string",
-				"name": "p_symbol",
-				"type": "string"
+				"components": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"internalType": "struct NameSym",
+				"name": "name_sym",
+				"type": "tuple"
 			},
 			{
 				"internalType": "address",
@@ -112,13 +128,17 @@
 				"internalType": "uint256",
 				"name": "liquidity_fee",
 				"type": "uint256"
-    }]
-    }, ["aa", "bb", "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB",
-        "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB", "0xb6F5414bAb8d5ad8F33E37591C02f7284E974FcB",
-        web3.utils.toWei("1000000"), 100,
-        100, 300,
-        300, 200]);
+			}
+		]
+    }, [_owner,
+        [_name, _symbol],
+        _marketing_wallet,
+        _donation_wallet,
+        _liquidity_wallet,
+        web3.utils.toWei(_total_supply),
+        _max_wallet_percentage, _max_tx_percentage,
+        _marketing_fee, _donation_fee, _liquidity_fee]);
     console.log(data)
-    launchToken('0x00A5543d7c4b15B5f4dff341676BdC5CD8076a19',data)
+    launchToken('0xacc17F62A1fC1AD0e69C689882F115C751f6e52d',data)
   }
 </script>
